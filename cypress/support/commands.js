@@ -1,25 +1,25 @@
-// ***********************************************
-// This example commands.js shows you how to
-// create various custom commands and overwrite
-// existing commands.
-//
-// For more comprehensive examples of custom
-// commands please read more here:
-// https://on.cypress.io/custom-commands
-// ***********************************************
-//
-//
-// -- This is a parent command --
-// Cypress.Commands.add('login', (email, password) => { ... })
-//
-//
-// -- This is a child command --
-// Cypress.Commands.add('drag', { prevSubject: 'element'}, (subject, options) => { ... })
-//
-//
-// -- This is a dual command --
-// Cypress.Commands.add('dismiss', { prevSubject: 'optional'}, (subject, options) => { ... })
-//
-//
-// -- This will overwrite an existing command --
-// Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+Cypress.Commands.add('fillMandatoryFieldsAndSubmit', (firstName, lastName, email, phone, text)=>{
+    cy.get('#firstName').type(firstName)
+    cy.get('#lastName').type(lastName)
+    cy.get('#email').type(email)
+    cy.get('#phone').type(phone)
+    cy.get('#open-text-area').type(text, {delay: 0})
+    cy.get('.button[type="submit"]').click()
+})
+
+Cypress.Commands.add('fillMandatoryFieldsAndClear', (firstName, lastName, email, phone, text) =>{
+    cy.get('#firstName').type(firstName).clear().should('have.value', '')
+    cy.get('#lastName').type(lastName).clear().should('have.value', '')
+    cy.get('#email').type(email).clear().should('have.value', '')
+    cy.get('#phone').type(phone).clear().should('have.value', '')
+    cy.get('#open-text-area').type(text, {delay: 0}).clear().should('have.value', '')
+})
+
+Cypress.Commands.add('fillFieldsExceptMandatoryPhone', () => {
+    cy.get('#firstName').type('Emerson')
+    cy.get('#lastName').type('Marques')
+    cy.get('#email').type('emerson@emerson.com')
+    cy.get('#open-text-area').type('Texto', {delay: 0})
+    cy.get('.button[type="submit"]').click()
+
+})
