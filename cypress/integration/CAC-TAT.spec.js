@@ -146,20 +146,11 @@ describe("Testes para a página CAC-TAT", () => {
             })
     });
 
-    it('seleciona um arquivo utilizando a ação Drag and drop e uma fixture para a qual foi dada um alias', () => {
-        cy.fixture('example.json', { encoding: null}).as('fileApelidado')
-        cy.get('input[type="file"]')
-            .selectFile('@fileApelidado', { action: "drag-drop" })
-            .then (input => {
-                expect(input[0].files[0].name).to.equal('example.json')
-            })
-    });
-
     it('verifica que a política de privacidade abre em outra aba sem a necessidade de um clique', () => {
         cy.get('#privacy a').should('have.attr', 'target', '_blank')
     });
 
-    it.only('acessa a página da política de privacidade removendo o target e então clicanco no link', () => {
+    it('acessa a página da política de privacidade removendo o target e então clicanco no link', () => {
         cy.get('#privacy a')
             .invoke('removeAttr', 'target')
             .click()
@@ -172,4 +163,6 @@ describe("Testes para a página CAC-TAT", () => {
         cy.get('#privacy a').click()
         
     });
+
+    
 });
