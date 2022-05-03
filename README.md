@@ -20,8 +20,15 @@ Foram feitas quatro configurações para rodar a suite de testes, são elas:
 
 > 1 - npm run cy:open -> Irá abrir o modo interativo do Cypress, ou seja, os testes serão feitos de maneira visual para você
 </br>
+
 > 2 - npm run test -> O teste será feito de maneira headless, ou seja, os testes não irão ser feitos de maneira visual, apenas entregando o resultado no prompt.
+
+</br>
+
 > 3 - npm run cy:openMobile -> Irá abrir novamente o modo interativo do Cypress, porém, desta vez a forma visual será feita usando um formato de tela em mobile.
+
+</br>
+
 > 4 - npm run testMobile -> O teste será feito de maneira headless e em modo mobile usando a resolução 410x860
 
 ## Support this project
