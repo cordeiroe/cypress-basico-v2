@@ -53,7 +53,7 @@ document.querySelector('button[type="submit"]')
     isPhoneRequired = false
     scroll(0,0)
     hideMessageAfterTimeout(successMessage)
-  }), false)
+  }), false;
 
 showAndHideErrorMessage= () =>{
   const errorMessage = document.querySelector('.error')
