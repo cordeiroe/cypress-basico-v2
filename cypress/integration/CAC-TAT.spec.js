@@ -1,6 +1,7 @@
 ///<reference types="Cypress" />
 
 const longText = 'Ainda assim, existem dúvidas a respeito de como a determinação clara de objetivos faz parte de um processo de gerenciamento de alternativas às soluções ortodoxas.'
+const threeSecInMs = 3000
 
     // Exercicio aula 1
 describe("Testes para a página CAC-TAT", () => {
@@ -19,36 +20,71 @@ describe("Testes para a página CAC-TAT", () => {
     // Exercicio aula 2 e exercicio extra 1
 
     it("Deve digitar em todos os campos obrigatórios", () => {
+
+        cy.clock()
+
         cy.fillMandatoryFieldsAndSubmit('Emerson', 'Marques', 'emerson@emerson.com', '123456789', longText)
+        
         cy.get('.success')
             .should('be.visible')
+        
+        cy.tick(threeSecInMs)
+
+        cy.get('.success')
+            .should('not.be.visible')
     });
 
     // Exercicio extra 2, aula 2
 
     it('Deve estourar uma mensagem de erro quando o email estiver digitado de forma incorreta', () => {
+        cy.clock()
         cy.fillMandatoryFieldsAndSubmit('Emerson', 'Marques', 'emerson!emerson.com', '123456789', longText)
         cy.get('.error')
             .should('be.visible')
+
+        cy.tick(threeSecInMs)
+
+        cy.get('.error')
+            .should('not.be.visible')
+        
+        
     });
 
     // Exercicio extra 3, aula 2
 
     it('Deve estourar uma mensagem de erro quando o telefone for cadastrado usando um caracter incorreto', () => {
+        cy.clock()
+        
         cy.fillMandatoryFieldsAndSubmit('Emerson', 'Marques', 'emerson@emerson.com', '1234a6789', longText)
         cy.get('.success')
             .should('be.visible')
+            
+        cy.tick(threeSecInMs)
+
+        cy.get('.success')
+            .should('not.be.visible')
+            
+            
     });
 
     // Exercicio extra 4, aula 2
     
     it('exibe mensagem de erro quando o telefone se torna obrigatório mas não é preenchido antes do envio do formulário', () => {
+        cy.clock()
+        
         cy.get('#phone-checkbox')
             .check()
         cy.fillMandatoryFieldsAndSubmit('Emerson', 'Marques', 'emerson@emerson.com', ' ', longText)
 
         cy.get('.error')
             .should('be.visible')
+        
+        cy.tick(threeSecInMs)
+
+        cy.get('.error')
+            .should('not.be.visible')
+        
+        
     });
 
     //Exercicio extra 5, aula 2
@@ -61,18 +97,33 @@ describe("Testes para a página CAC-TAT", () => {
     //Exercicio extra 6, aula 2
     
     it("Deve digitar nos campos, posteriormente apagar os dados digitados e tentar submeter o formulário vázio", () => {
+        cy.clock()
+        
         cy.contains('.button', 'Enviar')
             .click()
         cy.get('.error')
             .should('be.visible')
+
+        cy.tick(threeSecInMs)
+
+        cy.get('.error')
+            .should('not.be.visible')
     });
 
     it('envia o formulário com sucesso usando um comando customizado', () => {
+        cy.clock()
+
         cy.fillMandatoryFieldsAndSubmit('Emerson', 'Marques', 'emerson@emerson.com', '123456789', longText)
 
         cy.get('.success')
             .should('be.visible')
         
+        cy.tick(threeSecInMs)
+
+        cy.get('.success')
+            .should('not.be.visible')
+            
+            
     });
 
     it('seleciona um produto (youtube) por seu texto', () => {
