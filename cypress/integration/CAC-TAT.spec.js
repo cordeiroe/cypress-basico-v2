@@ -70,21 +70,23 @@ describe("Testes para a página CAC-TAT", () => {
     // Exercicio extra 4, aula 2
     
     it('exibe mensagem de erro quando o telefone se torna obrigatório mas não é preenchido antes do envio do formulário', () => {
-        cy.clock()
+        Cypress._.times(5, () => { 
         
-        cy.get('#phone-checkbox')
-            .check()
-        cy.fillMandatoryFieldsAndSubmit('Emerson', 'Marques', 'emerson@emerson.com', ' ', longText)
+            cy.clock()
+            
+            cy.get('#phone-checkbox')
+                .check()
+            cy.fillMandatoryFieldsAndSubmit('Emerson', 'Marques', 'emerson@emerson.com', ' ', longText)
 
-        cy.get('.error')
-            .should('be.visible')
-        
-        cy.tick(threeSecInMs)
+            cy.get('.error')
+                .should('be.visible')
+            
+            cy.tick(threeSecInMs)
 
-        cy.get('.error')
-            .should('not.be.visible')
+            cy.get('.error')
+                .should('not.be.visible')
         
-        
+        })
     });
 
     //Exercicio extra 5, aula 2
@@ -215,5 +217,38 @@ describe("Testes para a página CAC-TAT", () => {
         
     });
 
-    
+
+    it('exibe e esconde as mensagens de sucesso e erro usando o .invoke', () => {
+        cy.get('.success')
+            .should('not.be.visible')
+            .invoke('show')
+            .should('be.visible')
+            .and('contain', 'Mensagem enviada com sucesso.')
+            .invoke('hide')
+            .should('not.be.visible')
+        cy.get('.error')
+            .should('not.be.visible')
+            .invoke('show')
+            .should('be.visible')
+            .and('contain', 'Valide os campos obrigatórios!')
+            .invoke('hide')
+            .should('not.be.visible')
+    })
+
+    it('preenche a area de texto usando o comando invoke', () => {
+        cy.get('#open-text-area')
+            .invoke('val', longText)
+            .should('have.value', longText)
+    });
+
+    it('faz uma requisição HTTP', () => {
+        cy.request({
+            method: 'GET',
+            url: 'https://cac-tat.s3.eu-central-1.amazonaws.com/index.html'
+        }).then((response) => {
+            expect(response.status).to.equal(200)
+            expect(response.statusText).to.equal('OK')
+        })
+    });
+        
 });
